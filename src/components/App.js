@@ -1,40 +1,64 @@
 
 import React, { useState, useEffect } from 'react';
+import Markdown from "react-markdown";
 
 function App() {
     const [markdown, setMarkdown] = useState('');
-    const [html, setHtml] = useState('');
-    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) =>{
+      setMarkdown(e.target.value)
+    }
+
+    return(
+      <div className='app'>
+        <textarea onChange={handleChange}/>
+
+        <Markdown className="preview" >{markdown}</Markdown>
+      </div>
+    )
+
+
+
+
+
+
+
+
+
+
+    // const [html, setHtml] = useState('');
+    // const [loading, setLoading] = useState(false);
   
-    useEffect(() => {
+//     useEffect(() => {
       
-      const convertedHtml = markdown.replace(/\n/g, '<br>');
-      setHtml(convertedHtml);
-    }, [markdown]);
+//       const convertedHtml = markdown.replace(/\n/g, '<br>');
+//       setHtml(convertedHtml);
+//     }, [markdown]);
   
-    const handleMarkdownChange = (e) => {
-      setMarkdown(e.target.value);
-    };
+//     const handleMarkdownChange = (e) => {
+//       setMarkdown(e.target.value);
+//     };
   
-    return (
-      <div className="app">
-        <div className="textarea">
-          <textarea
-            placeholder="Enter markdown task here..."
-            value={markdown}
+//     return (
+//       <div className="app">
+//         <div className="textarea">
+//           <textarea
+//             placeholder="Enter markdown task here..."
+//             value={markdown}
            
-            onChange={handleMarkdownChange}
-          />
-        </div>
-        <div className="preview">
-        {loading ? (
-          <h1 className="loading">Loading...</h1>
-        ) : (
-          <strong><h1 dangerouslySetInnerHTML={{ __html: markdown }} /> </strong>
-        )}
-      </div>
-      </div>
-    );
+//             onChange={handleMarkdownChange}
+//           />
+//         </div>
+//         <div className="preview">
+//         {loading ? (
+//           <h1 className="loading">Loading...</h1>
+//         ) : (
+//           <strong><h1 dangerouslySetInnerHTML={{ __html: markdown }} /> </strong>
+//         )}
+//       </div>
+//       </div>
+//     );
+
   }
   
 export default App;
