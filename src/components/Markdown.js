@@ -1,24 +1,56 @@
-import React, { useState } from "react";
-const Markdown = () => {
+import React, { useState, useEffect } from 'react'
+import { markdown } from 'markdown';
 
-    const [markdownText, setMarkdownText] = useState("")
-    const [htmlText, setHtmlText] = useState("");
+const MarkdownApp = () => {
+  const [markdownText, setMarkdownText] = useState('');
+  const [preview, setPreview] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-    useEffect( ()=>{
-        console.log(marked.parse(markdownText))
-  } , [markdownText])
+  useEffect(() => {
+    // You can add additional processing here if needed
+    // For now, just update the preview with the markdown content
+    setPreview(markdown);
+  }, [markdown]);
 
-    return (
-        <div className="markdown">
-            <div className="mark">
-                <textarea 
-                placeholder="Enter your markdown here"
-                onChange={e=>setMarkdownText(e.target.value)}
-                value={markdownText}
-                />
-            </div>
+  const handleMarkdownChange = (event) => {
+    // Update the markdown state when the user types in the textarea
+    setMarkdownText(event.target.value);
+  };
 
-        </div>
-    )
-}
-export default Markdown;
+  const handlePreviewLoading = () => {
+    // Simulate loading if needed
+    setIsLoading(true);
+
+    // Simulate asynchronous processing (e.g., fetching data)
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  };
+
+  return (
+    <div className="app">
+      <div className="textarea">
+        <textarea
+          value={markdownText}
+          onChange={handleMarkdownChange}
+          placeholder="Write your markdown here..."
+        />
+      </div>
+
+      <div className="preview">
+        {isLoading ? (
+          <p className="loading">Loading...</p>
+        ) : (
+          <div>
+            <h2>Markdown Preview</h2>
+            <div dangerouslySetInnerHTML={{ __html: markdown.toHTML(markdownText) }} />
+          </div>
+        )}
+      </div>
+
+      <button onClick={handlePreviewLoading}>Load Preview</button>
+    </div>
+  );
+};
+
+export default MarkdownApp;
